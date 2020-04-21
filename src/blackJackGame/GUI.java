@@ -162,27 +162,6 @@ public class GUI extends JFrame {
 
 
 
-    public class Stand implements ActionListener {
-
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
-            System.out.println("WOW parta -Stand");
-        }
-    }
-
-    public class Rules implements ActionListener {
-
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
-            System.out.println("WOW parta--rules");
-        }
-    }
-
-
     public class Yes implements ActionListener {
 
 

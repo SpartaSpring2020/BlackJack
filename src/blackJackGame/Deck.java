@@ -24,7 +24,7 @@ public class Deck {
 	
 	public void shuffleDeck()
 	{
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1000; i++) {
 		Random rand = new Random();
 		for (int shfl=0; shfl<52; shfl++)
 		{
