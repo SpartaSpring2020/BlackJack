@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class GUI extends JFrame {
     int width = 1200; // Screen Height
     int height = 900; // Screen Width
@@ -36,19 +37,55 @@ public class GUI extends JFrame {
     int cardTH = gridH / 2;
     int cardAW = cardTW - 2 * cardSpacing;
     int cardAH = cardTH - 2 * cardSpacing;
+    
+    Dealer d;
+    ArrayList <Card> playerCards = new ArrayList <Card>();
+    ArrayList <Card> dealerCards = new ArrayList <Card>();
+    
+    
+    public void loadDealerCards(ArrayList <Card> cards) {
+ 	   	int j = 0;
+        for (Card c: cards) {
+            System.out.println("Dealer has card" + " " + c.getName() + c.getNum() + " " + "of" + " " + c.getShape());
+            char shape = c.getShape().charAt(0);
+            char lShape = Character.toLowerCase(shape);
+            String path = "imgs/" + c.getNum() + lShape + ".gif";
+            System.out.println(path);
+            ImageIcon image = new ImageIcon(path);
+            JLabel imageLabel = new JLabel(image);
+            add(imageLabel);
+            imageLabel.setBounds(gridX + j * cardTW + cardSpacing, gridY + cardSpacing + cardTH, cardAW, cardAH);
+            j++;
+            imageLabel.setVisible(true);
 
+        }
+    }
+    
 
-    Deck cards = new Deck();
-    ArrayList < Card > playerCards = new ArrayList < Card > ();
-    ArrayList < Card > dealerCards = new ArrayList < Card > ();
+    public void loadPlayerCards(ArrayList <Card> cards) {
+    	 int i = 0;
+         for (Card c: cards) {
+             System.out.println(("Player has card" + " " + c.getName() + c.getNum() + " " + "of" + " " + c.getShape()));
+             char shape = c.getShape().charAt(0);
+             char lShape = Character.toLowerCase(shape);
+             String path = "imgs/" + String.valueOf(c.getNum()) + lShape + ".gif";
+             System.out.println(path);
+             ImageIcon image = new ImageIcon(path);
+             JLabel imageLabel = new JLabel(image);
+             add(imageLabel);
 
+             imageLabel.setBounds(gridX + i * cardTW + cardSpacing, gridY + cardSpacing + 25, cardAW, cardAH);
+             i++;
+             imageLabel.setVisible(true);
+         }
+    }
 
     public GUI() {
         this.setSize(width, height);
-        this.setTitle("BlackJack2");
+        this.setTitle("BlackJack");
         this.setVisible(true);
         this.setResizable(true);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Board board = new Board();
         this.setContentPane(board);
         this.setLayout(null);
@@ -79,70 +116,15 @@ public class GUI extends JFrame {
         buttonRules.setBackground(colorButton);
         buttonRules.setText("RULES");
         board.add(buttonRules);
-
-
-        Yes yes = new Yes();
-        buttonYes.addActionListener(yes);
-        buttonYes.setBounds(900, 620, 80, 30);
-        buttonYes.setFont(fontButton2);
-        buttonYes.setBackground(colorButton);
-        buttonYes.setText("Yes");
-        board.add(buttonYes);
-
-
-        No no = new No();
-        buttonNo.addActionListener(rules);
-        buttonNo.setBounds(1050, 620, 80, 30);
-        buttonNo.setFont(fontButton2);
-        buttonNo.setBackground(colorButton);
-        buttonNo.setText("No");
-        board.add(buttonNo);
         
-        cards.generateDeck();
-        cards.shuffleDeck();
-        
-        for (int cDealt=0; cDealt < 2; cDealt++) {
-        	playerCards.add(cards.drawCard());
-        	dealerCards.add(cards.drawCard());
-        }
+        d = new Dealer();
+        d.deal();
        
+        dealerCards = d.getHand().getHand();
+        playerCards = d.getPlayers().get(0).getHand().getHand();
 
-        int i = 0;
-        for (Card c: playerCards) {
-            System.out.println(("Player has card" + " " + c.getName() + " " + "of" + " " + c.getShape()));
-            char shape = c.getShape().charAt(0);
-            char lShape = Character.toLowerCase(shape);
-            String path = "test/" + c.getNum() + lShape + ".gif";
-            System.out.println(path);
-            ImageIcon image = new ImageIcon(path);
-            JLabel imageLabel = new JLabel(image);
-            add(imageLabel);
-
-            imageLabel.setBounds(gridX + i * cardTW + cardSpacing, gridY + cardSpacing + 25, cardAW, cardAH);
-            i++;
-            imageLabel.setVisible(true);
-
-
-
-        }
-        int j = 0;
-
-        for (Card c: dealerCards) {
-            System.out.println("Dealer has card" + " " + c.getName() + " " + "of" + " " + c.getShape());
-            char shape = c.getShape().charAt(0);
-            char lShape = Character.toLowerCase(shape);
-            String path = "test/" + c.getNum() + lShape + ".gif";
-            System.out.println(path);
-            ImageIcon image = new ImageIcon(path);
-            JLabel imageLabel = new JLabel(image);
-            add(imageLabel);
-            imageLabel.setBounds(gridX + j * cardTW + cardSpacing, gridY + cardSpacing + cardTH, cardAW, cardAH);
-            j++;
-            imageLabel.setVisible(true);
-
-        }
-
-
+       loadPlayerCards(dealerCards);
+       loadDealerCards(playerCards);
     }
 
     public class Board extends JPanel {
@@ -160,25 +142,5 @@ public class GUI extends JFrame {
 
     }
 
-
-
-    public class Yes implements ActionListener {
-
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
-            System.out.println("WOW parta -Yes");
-        }
-    }
-
-    public class No implements ActionListener {
-
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
-            System.out.println("WOW parta--No");
-        }
-    }
 }
+
