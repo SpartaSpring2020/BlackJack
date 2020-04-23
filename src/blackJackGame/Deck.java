@@ -9,7 +9,7 @@ public class Deck {
 	ArrayList <Card> cards = new ArrayList <Card>();
 	
 	public void generateDeck() {
-	for (int i=2; i<=15;i++) {
+	for (int i=2; i<15;i++) {
 		Card club = new Card(i, "Clubs");
 		Card heart = new Card(i, "Hearts");
 		Card spade = new Card(i, "Spades");
