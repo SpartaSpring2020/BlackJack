@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Deck {
 	ArrayList <Card> cards = new ArrayList <Card>();
-	
+
 	public void generateDeck() {
 	for (int i=2; i<15;i++) {
 		Card club = new Card(i, "Clubs");
@@ -21,7 +21,7 @@ public class Deck {
 		}
 
 }
-	
+
 	public void shuffleDeck()
 	{
 		for (int i = 0; i < 1000; i++) {
@@ -33,7 +33,7 @@ public class Deck {
 		}
 		}
 	}
-	
+
 	public ArrayList<Card> getDeck (){return cards;}
 	public Card drawCard() {
 		Card myCard = cards.get(0);
