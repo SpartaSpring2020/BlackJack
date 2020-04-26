@@ -37,12 +37,18 @@ public class GUI extends JFrame {
     int cardTH = gridH / 2;
     int cardAW = cardTW - 2 * cardSpacing;
     int cardAH = cardTH - 2 * cardSpacing;
-    
-    Dealer d;
-    ArrayList <Card> playerCards = new ArrayList <Card>();
-    ArrayList <Card> dealerCards = new ArrayList <Card>();
-    
-    
+
+    public Dealer dealer;
+    public Player player;
+
+    //static ArrayList <Card> playerCards = new ArrayList <Card>();
+    //static ArrayList <Card> dealerCards = new ArrayList <Card>();
+
+
+    public void updateDealerCards()
+    {
+    	loadDealerCards(dealer.getHand().getCards());
+    }
     public void loadDealerCards(ArrayList <Card> cards) {
  	   	int j = 0;
         for (Card c: cards) {
@@ -54,14 +60,18 @@ public class GUI extends JFrame {
             ImageIcon image = new ImageIcon(path);
             JLabel imageLabel = new JLabel(image);
             add(imageLabel);
-            imageLabel.setBounds(gridX + j * cardTW + cardSpacing, gridY + cardSpacing + cardTH, cardAW, cardAH);
+            imageLabel.setBounds(gridX + j * cardTW + cardSpacing, gridY + cardSpacing + 25, cardAW, cardAH);
             j++;
             imageLabel.setVisible(true);
 
         }
     }
-    
 
+
+    public void updatePlayerCards()
+    {
+    	loadPlayerCards(dealer.getPlayers().get(0).getHand().getCards());
+    }
     public void loadPlayerCards(ArrayList <Card> cards) {
     	 int i = 0;
          for (Card c: cards) {
@@ -74,7 +84,7 @@ public class GUI extends JFrame {
              JLabel imageLabel = new JLabel(image);
              add(imageLabel);
 
-             imageLabel.setBounds(gridX + i * cardTW + cardSpacing, gridY + cardSpacing + 25, cardAW, cardAH);
+             imageLabel.setBounds(gridX + i * cardTW + cardSpacing, gridY + cardSpacing + cardTH, cardAW, cardAH);
              i++;
              imageLabel.setVisible(true);
          }
@@ -116,15 +126,18 @@ public class GUI extends JFrame {
         buttonRules.setBackground(colorButton);
         buttonRules.setText("RULES");
         board.add(buttonRules);
-        
-        d = new Dealer();
-        d.deal();
-       
-        dealerCards = d.getHand().getHand();
-        playerCards = d.getPlayers().get(0).getHand().getHand();
 
-       loadPlayerCards(dealerCards);
-       loadDealerCards(playerCards);
+        dealer = new Dealer();
+        player = dealer.getPlayers().get(0);
+        dealer.deal();
+
+        ArrayList <Card> playerCards = new ArrayList <Card>();
+        ArrayList <Card> dealerCards = new ArrayList <Card>();
+        dealerCards = dealer.getHand().getCards();
+        playerCards = player.getHand().getCards();
+
+        loadDealerCards(dealerCards);
+        loadPlayerCards(playerCards);
     }
 
     public class Board extends JPanel {
@@ -142,5 +155,46 @@ public class GUI extends JFrame {
 
     }
 
-}
+    public void addPlayerCard(Card newCard)
+    {
+    	//Add validations
+    	dealer.getPlayers().get(0).getHand().addCard(newCard);
+    	//playerCards = dealer.getPlayers().get(0).getHand().getCards();
+    }
+    public void addDealerCard(Card newCard)
+    {
+    	//Add validations
+    	dealer.getHand().addCard(newCard);
+    	//dealerCards = dealer.getHand().getCards();
+    }
 
+    public boolean checkForGameCompletion()
+    {
+    	boolean isGameCompleted = false;
+        /*if( player.getTotalValue() == 21 && dealer.getTotalValue() == 21 )
+        {
+        	JOptionPane.showMessageDialog(null, "It's a tie, will start a new game", "Tie", JOptionPane.INFORMATION_MESSAGE);
+        	isGameCompleted = true;
+        }
+        else if( player.getTotalValue() == 21 )
+        {
+        	JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Won the game", JOptionPane.INFORMATION_MESSAGE);
+        	isGameCompleted = true;
+        }
+        else if( dealer.getTotalValue() == 21 )
+        {
+        	JOptionPane.showMessageDialog(null, "Tough Luck: Dealer got a 21", "Lost the game", JOptionPane.INFORMATION_MESSAGE);
+        	isGameCompleted = true;
+        }
+        if(isGameCompleted)
+        {
+        	playGame.newGame();
+        }*/
+        return isGameCompleted;
+    }
+
+    public void pressStandButton()
+    {
+    	buttonStand.doClick();
+    }
+}
