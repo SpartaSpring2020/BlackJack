@@ -27,6 +27,7 @@ public class GUI extends JFrame {
     JButton buttonRules = new JButton();
     JButton buttonYes = new JButton();
     JButton buttonNo = new JButton();
+    JButton buttonNew = new JButton();
 
     
     int gridX = 50;
@@ -78,7 +79,8 @@ public class GUI extends JFrame {
             imageLabel.setVisible(true);
 
         }
-    }
+    } 
+    
 
 
     public void updatePlayerCards()
@@ -86,22 +88,22 @@ public class GUI extends JFrame {
     	loadPlayerCards(dealer.getPlayers().get(0).getHand().getCards());
     }
     public void loadPlayerCards(ArrayList <Card> cards) {
-    	 int i = 0;
-         for (Card c: cards) {
-             System.out.println(("Player has card" + " " + c.getName() + c.getNum() + " " + "of" + " " + c.getShape()));
-             char shape = c.getShape().charAt(0);
-             char lShape = Character.toLowerCase(shape);
-             String path = "imgs/" + String.valueOf(c.getNum()) + lShape + ".gif";
-             System.out.println(path);
-             ImageIcon image = new ImageIcon(path);
-             JLabel imageLabel = new JLabel(image);
-             add(imageLabel);
+   	 int i = 0;
+        for (Card c: cards) {
+            System.out.println(("Player has card" + " " + c.getName() + c.getNum() + " " + "of" + " " + c.getShape()));
+            char shape = c.getShape().charAt(0);
+            char lShape = Character.toLowerCase(shape);
+            String path = "imgs/" + String.valueOf(c.getNum()) + lShape + ".gif";
+            System.out.println(path);
+            ImageIcon image = new ImageIcon(path);
+            JLabel imageLabel = new JLabel(image);
+            add(imageLabel);
 
-             imageLabel.setBounds(gridX + i * cardTW + cardSpacing, gridY + cardSpacing + cardTH, cardAW, cardAH);
-             i++;
-             imageLabel.setVisible(true);
-         }
-    }
+            imageLabel.setBounds(gridX + i * cardTW + cardSpacing, gridY + cardSpacing + cardTH, cardAW, cardAH);
+            i++;
+            imageLabel.setVisible(true);
+        }
+   }
 
     public GUI() {
     	
@@ -118,7 +120,7 @@ public class GUI extends JFrame {
         //Hit button
         Hit hit = new Hit();
         buttonHit.addActionListener(hit);
-        buttonHit.setBounds(1000, 50, 120, 40);
+        buttonHit.setBounds(1000, 50, 160, 40);
         buttonHit.setFont(fontButton);
         buttonHit.setBackground(colorButton);
         buttonHit.setText("HIT");
@@ -127,7 +129,7 @@ public class GUI extends JFrame {
         //Stand button
         Stand stand = new Stand();
         buttonStand.addActionListener(stand);
-        buttonStand.setBounds(1000, 180, 120, 40);
+        buttonStand.setBounds(1000, 180, 160, 40);
         buttonStand.setFont(fontButton);
         buttonStand.setBackground(colorButton);
         buttonStand.setText("STAND");
@@ -136,11 +138,20 @@ public class GUI extends JFrame {
         //Rules button
         Rules rules = new Rules();
         buttonRules.addActionListener(rules);
-        buttonRules.setBounds(1000, 310, 120, 40);
+        buttonRules.setBounds(1000, 310, 160, 40);
         buttonRules.setFont(fontButton);
         buttonRules.setBackground(colorButton);
         buttonRules.setText("RULES");
         board.add(buttonRules);
+        
+        //New Game Button
+        NewGame newG = new NewGame();
+        buttonNew.addActionListener(newG);
+        buttonNew.setBounds(1000, 440, 160, 40);
+        buttonNew.setFont(fontButton);
+        buttonNew.setBackground(colorButton);
+        buttonNew.setText("NEW GAME");
+        board.add(buttonNew);
 
         dealer = new Dealer();
         player = dealer.getPlayers().get(0);
@@ -153,6 +164,14 @@ public class GUI extends JFrame {
 
         loadDealerCards(dealerCards);
         loadPlayerCards(playerCards);
+        
+        if (dealer.getHand().getHandValue() == 21) {
+        	JOptionPane.showMessageDialog(null, "Dealer Got 21", "You Lose!", JOptionPane.INFORMATION_MESSAGE);
+        }
+        if (dealer.getPlayers().get(0).getHand().getHandValue() == 21) {
+        	JOptionPane.showMessageDialog(null, "Excellent: It's 21", "You Win!", JOptionPane.INFORMATION_MESSAGE);
+        }
+        	
     }
 
     public class Board extends JPanel {
@@ -170,8 +189,8 @@ public class GUI extends JFrame {
             Color white = new Color(255,255,255);
             eg.setColor(white);
             eg.setFont(labelFont);
-            eg.drawString("PLAYER", 100,100);
-            eg.drawString("DEALER", 100, 275);
+            eg.drawString("PLAYER", 100, 275);
+            eg.drawString("DEALER", 100, 100);
             eg.drawString("SCORE", 100,500);
            
 
@@ -196,7 +215,7 @@ public class GUI extends JFrame {
     public boolean checkForGameCompletion()
     {
     	boolean isGameCompleted = false;
-        /*if( player.getTotalValue() == 21 && dealer.getTotalValue() == 21 )
+        if( player.getTotalValue() == 21 && dealer.getTotalValue() == 21 )
         {
         	JOptionPane.showMessageDialog(null, "It's a tie, will start a new game", "Tie", JOptionPane.INFORMATION_MESSAGE);
         	isGameCompleted = true;
@@ -214,7 +233,7 @@ public class GUI extends JFrame {
         if(isGameCompleted)
         {
         	playGame.newGame();
-        }*/
+        }
         return isGameCompleted;
     }
 

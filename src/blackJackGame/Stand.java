@@ -11,11 +11,9 @@ public class Stand implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		boolean isStartNewGame = false;
 		if( isHitComplete ) return;
 		isHitComplete = true;
-		System.out.println("WOW parta -Stand");
 		GUI gui = playGame.getGUI();
 		Dealer dealer = gui.dealer;
 		Deck cardsDeck = dealer.getCardsDeck();
