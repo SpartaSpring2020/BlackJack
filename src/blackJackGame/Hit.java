@@ -7,9 +7,7 @@ public class Hit extends playGame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
     	boolean isStartNewGame = false;
-        System.out.println("WOW parta--Hit");
         GUI gui = playGame.getGUI();
         Dealer dealer = gui.dealer;
         Deck cardsDeck = dealer.getCardsDeck();
