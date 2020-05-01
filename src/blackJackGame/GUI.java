@@ -84,6 +84,8 @@ public class GUI extends JFrame {
 
     public void updatePlayerCards() {
         loadPlayerCards(dealer.getPlayers().get(0).getHand().getCards());
+        String handValStr = String.valueOf(dealer.getPlayers().get(0).getTotalValue());
+        JOptionPane.showMessageDialog(null, handValStr, "Your hand's value is: ", JOptionPane.INFORMATION_MESSAGE);
 
     }
     public void loadPlayerCards(ArrayList < Card > cards) {
@@ -103,6 +105,8 @@ public class GUI extends JFrame {
             imageLabel.setVisible(true);
         }
     }
+    
+  
 
 
     public GUI() {
@@ -153,10 +157,6 @@ public class GUI extends JFrame {
         buttonNew.setText("NEW GAME");
         board.add(buttonNew);
 
-        //Hand Value Label
-        JLabel scoreLabel = new JLabel("Score = ", JLabel.CENTER);
-        scoreLabel.setBounds(250, 500, 160, 40);
-        board.add(scoreLabel);
 
         dealer = new Dealer();
         player = dealer.getPlayers().get(0);
@@ -166,10 +166,13 @@ public class GUI extends JFrame {
         ArrayList < Card > dealerCards = new ArrayList < Card > ();
         dealerCards = dealer.getHand().getCards();
         playerCards = player.getHand().getCards();
-
+        
         loadDealerCards(dealerCards);
         loadPlayerCards(playerCards);
-
+        
+        //Value of Hand Message
+        String handValStr = String.valueOf(dealer.getPlayers().get(0).getTotalValue());
+        JOptionPane.showMessageDialog(null, handValStr, "Your hand's value is: ", JOptionPane.INFORMATION_MESSAGE);
 
         if (dealer.getHand().getHandValue() == 21) {
             JOptionPane.showMessageDialog(null, "Dealer Got 21", "You Lose!", JOptionPane.INFORMATION_MESSAGE);
