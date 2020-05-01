@@ -3,35 +3,37 @@ package blackJackGame;
 import java.util.ArrayList;
 
 public class Hand {
-	ArrayList <Card> cards;
-	private int value;
+    ArrayList < Card > cards;
+    private int value;
 
-	public Hand()
-	{
-		cards = new ArrayList <Card>();
-	}
+    public Hand() {
+        cards = new ArrayList < Card > ();
+    }
 
-	public void addCard(Card thisCard) {
-		cards.add(thisCard);
-		handValue();
-	}
+    public void addCard(Card thisCard) {
+        cards.add(thisCard);
+        handValue();
+    }
 
 
-	public void handValue()
-	{
-		int value = 0;
-		for (Card c : cards) {
-			if (c.getCardValue() == 1)
-			{
-				value = value + 11;
-			}
-			else{
-				value = value + c.getCardValue();
-			}
-		}
-		 this.value = value;
-	}
+    public void handValue() {
+        value = 0;
+        boolean hasAce = false;
+        for (Card c: cards) {
+            if (c.isAce()) {
+                hasAce = true;
+            }
+            value = value + c.getCardValue();
+        }
+        if (value > 21 && hasAce) {
+            value = value - 10;
+        }
+    }
 
-	public int getHandValue() {return value;}
-	public ArrayList <Card> getCards() {return cards;}
+    public int getHandValue() {
+        return value;
+    }
+    public ArrayList < Card > getCards() {
+        return cards;
+    }
 }
