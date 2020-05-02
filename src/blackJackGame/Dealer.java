@@ -33,6 +33,13 @@ public class Dealer {
 
         }
     }
+    
+    public void newRound() {
+    	for (Player p: players) {
+    		p.emptyHand();
+    	}
+    	this.emptyHand();
+    }
 
 
 
@@ -51,5 +58,11 @@ public class Dealer {
     public int getPlayerValue() {
         return players.get(0).getTotalValue();
     }
+    public void emptyHand() {
+    	myHand = null;
+    	myHand = new Hand();
+    }
+    
+    
 
 }

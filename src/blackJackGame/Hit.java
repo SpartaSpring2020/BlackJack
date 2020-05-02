@@ -19,7 +19,7 @@ public class Hit extends playGame implements ActionListener {
         int playerTotal = player.getTotalValue();
         if (playerTotal > 21) {
             //Total with new card is more than 21
-            JOptionPane.showMessageDialog(null, "Total exeeded 21", "Lost the game", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Total exeeded 21", "Lost the round", JOptionPane.INFORMATION_MESSAGE);
             isStartNewGame = true;
         } else if (playerTotal == 21) {
             JOptionPane.showMessageDialog(null, "Excellent: It's 21, it's dealers turn", "Dealers Turn", JOptionPane.INFORMATION_MESSAGE);
@@ -27,7 +27,7 @@ public class Hit extends playGame implements ActionListener {
             isStartNewGame = true;
         }
         if (isStartNewGame) {
-            playGame.newGame();
+            playGame.newRound();
         }
     }
 }

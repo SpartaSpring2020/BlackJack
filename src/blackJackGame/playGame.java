@@ -1,9 +1,14 @@
 package blackJackGame;
 
+import java.util.ArrayList;
 
 public class playGame implements Runnable {
-    static GUI gui = new GUI();
-
+    
+    
+    static Dealer dealer = new Dealer();
+    static GUI gui = new GUI(dealer);
+    
+    
     public static void main(String[] args) {
         boolean isGameCompleted = gui.checkForGameCompletion();
         if (!isGameCompleted) {
@@ -21,9 +26,25 @@ public class playGame implements Runnable {
         return gui;
     }
 
-    public static void newGame() {
+    public static void newRound() {
+    	System.out.println("Starting New Round...");
+    	dealer.newRound();
         gui.dispose();
-        gui = new GUI();
+        gui = new GUI(dealer);
+        new Thread(new playGame()).start();
+        
+    }
+    
+    public static void newGame() {
+    	System.out.println("Starting New Game...");
+    	gui.dispose();
+    	dealer = null;
+    	dealer = new Dealer();
+
+    	
+        gui = new GUI(dealer);
         new Thread(new playGame()).start();
     }
+    
+    public Dealer getDealer() {return dealer;}
 }
