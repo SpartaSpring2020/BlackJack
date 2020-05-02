@@ -9,19 +9,19 @@ import java.awt.event.ActionListener;
 
 
 public class GUI extends JFrame {
-	
+
     int width = 1200; // Screen Height
     int height = 900; // Screen Width
 
-   
+
     Font fontButton = new Font("Times New Roman", Font.PLAIN, 20);
     Font fontButton2 = new Font("Times New Roman", Font.PLAIN, 18);
     Font fontCard = new Font("Times New Roman", Font.BOLD, 30);
-    Font labelFont = new Font("Liberation Serif",Font.BOLD| Font.ITALIC,20);
-   
+    Font labelFont = new Font("Liberation Serif", Font.BOLD | Font.ITALIC, 20);
+
     Color colorBackground = new Color(0, 128, 0);
     Color colorButton = new Color(250, 250, 250);
-    
+
     JButton buttonHit = new JButton();
     JButton buttonStand = new JButton();
     JButton buttonRules = new JButton();
@@ -29,15 +29,15 @@ public class GUI extends JFrame {
     JButton buttonNo = new JButton();
     JButton buttonNew = new JButton();
 
-    
+
     int gridX = 50;
     int gridY = 50;
-    int gridW = 900;//Grid Width
-    int gridH = 400;// Grid Height
-    
-    
-   
-    
+    int gridW = 900; //Grid Width
+    int gridH = 400; // Grid Height
+
+
+
+
 
     // Display Cards
     int cardSpacing = 10;
@@ -53,18 +53,17 @@ public class GUI extends JFrame {
 
 
 
-    public void updateDealerCards()
-    {
-    	loadDealerCards(dealer.getHand().getCards());
+    public void updateDealerCards() {
+        loadDealerCards(dealer.getHand().getCards());
     }
 
-    
-    
-    ArrayList <Card> playerCards = new ArrayList <Card>();
-    ArrayList <Card> dealerCards = new ArrayList <Card>();
-    
-    public void loadDealerCards(ArrayList <Card> cards) {
- 	   	int j = 0;
+
+
+    ArrayList < Card > playerCards = new ArrayList < Card > ();
+    ArrayList < Card > dealerCards = new ArrayList < Card > ();
+
+    public void loadDealerCards(ArrayList < Card > cards) {
+        int j = 0;
         for (Card c: cards) {
             System.out.println("Dealer has card" + " " + c.getName() + c.getNum() + " " + "of" + " " + c.getShape());
             char shape = c.getShape().charAt(0);
@@ -79,16 +78,18 @@ public class GUI extends JFrame {
             imageLabel.setVisible(true);
 
         }
-    } 
-    
-
-
-    public void updatePlayerCards()
-    {
-    	loadPlayerCards(dealer.getPlayers().get(0).getHand().getCards());
     }
-    public void loadPlayerCards(ArrayList <Card> cards) {
-   	 int i = 0;
+
+
+
+    public void updatePlayerCards() {
+        loadPlayerCards(dealer.getPlayers().get(0).getHand().getCards());
+        String handValStr = String.valueOf(dealer.getPlayers().get(0).getTotalValue());
+        JOptionPane.showMessageDialog(null, handValStr, "Your hand's value is: ", JOptionPane.INFORMATION_MESSAGE);
+
+    }
+    public void loadPlayerCards(ArrayList < Card > cards) {
+        int i = 0;
         for (Card c: cards) {
             System.out.println(("Player has card" + " " + c.getName() + c.getNum() + " " + "of" + " " + c.getShape()));
             char shape = c.getShape().charAt(0);
@@ -103,11 +104,14 @@ public class GUI extends JFrame {
             i++;
             imageLabel.setVisible(true);
         }
-   }
+    }
+    
+  
+
 
     public GUI() {
-    	
-    	
+
+
         this.setSize(width, height);
         this.setTitle("BlackJack");
         this.setVisible(true);
@@ -116,7 +120,7 @@ public class GUI extends JFrame {
         Board board = new Board();
         this.setContentPane(board);
         this.setLayout(null);
-   
+
         //Hit button
         Hit hit = new Hit();
         buttonHit.addActionListener(hit);
@@ -143,7 +147,7 @@ public class GUI extends JFrame {
         buttonRules.setBackground(colorButton);
         buttonRules.setText("RULES");
         board.add(buttonRules);
-        
+
         //New Game Button
         NewGame newG = new NewGame();
         buttonNew.addActionListener(newG);
@@ -153,32 +157,39 @@ public class GUI extends JFrame {
         buttonNew.setText("NEW GAME");
         board.add(buttonNew);
 
+
         dealer = new Dealer();
         player = dealer.getPlayers().get(0);
         dealer.deal();
 
-        ArrayList <Card> playerCards = new ArrayList <Card>();
-        ArrayList <Card> dealerCards = new ArrayList <Card>();
+        ArrayList < Card > playerCards = new ArrayList < Card > ();
+        ArrayList < Card > dealerCards = new ArrayList < Card > ();
         dealerCards = dealer.getHand().getCards();
         playerCards = player.getHand().getCards();
-
+        
         loadDealerCards(dealerCards);
         loadPlayerCards(playerCards);
         
+        //Value of Hand Message
+        String handValStr = String.valueOf(dealer.getPlayers().get(0).getTotalValue());
+        JOptionPane.showMessageDialog(null, handValStr, "Your hand's value is: ", JOptionPane.INFORMATION_MESSAGE);
+
         if (dealer.getHand().getHandValue() == 21) {
-        	JOptionPane.showMessageDialog(null, "Dealer Got 21", "You Lose!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Dealer Got 21", "You Lose!", JOptionPane.INFORMATION_MESSAGE);
+            playGame.newGame();
         }
         if (dealer.getPlayers().get(0).getHand().getHandValue() == 21) {
-        	JOptionPane.showMessageDialog(null, "Excellent: It's 21", "You Win!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Excellent: It's 21", "You Win!", JOptionPane.INFORMATION_MESSAGE);
+            playGame.newGame();
         }
-        	
+
     }
 
     public class Board extends JPanel {
-    	
-    	
+
+
         public void paintComponent(Graphics g) {
-        	super.paintComponent(g);
+            super.paintComponent(g);
             g.setColor(colorBackground);
             g.fillRect(0, 0, width, height);
             //Temp grid
@@ -186,59 +197,48 @@ public class GUI extends JFrame {
             g.drawRect(gridX, gridY, gridW, gridH);
             Graphics2D eg = (Graphics2D) g;
             eg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            Color white = new Color(255,255,255);
+            Color white = new Color(255, 255, 255);
             eg.setColor(white);
             eg.setFont(labelFont);
             eg.drawString("PLAYER", 100, 275);
             eg.drawString("DEALER", 100, 100);
-            eg.drawString("SCORE", 100,500);
-           
+            eg.drawString("SCORE", 100, 500);
+
+
 
 
         }
 
     }
 
-    public void addPlayerCard(Card newCard)
-    {
-    	//Add validations
-    	dealer.getPlayers().get(0).getHand().addCard(newCard);
-    	//playerCards = dealer.getPlayers().get(0).getHand().getCards();
+    public void addPlayerCard(Card newCard) {
+        //Add validations
+        dealer.getPlayers().get(0).getHand().addCard(newCard);
     }
-    public void addDealerCard(Card newCard)
-    {
-    	//Add validations
-    	dealer.getHand().addCard(newCard);
-    	//dealerCards = dealer.getHand().getCards();
+    public void addDealerCard(Card newCard) {
+        //Add validations
+        dealer.getHand().addCard(newCard);
     }
 
-    public boolean checkForGameCompletion()
-    {
-    	boolean isGameCompleted = false;
-        if( player.getTotalValue() == 21 && dealer.getTotalValue() == 21 )
-        {
-        	JOptionPane.showMessageDialog(null, "It's a tie, will start a new game", "Tie", JOptionPane.INFORMATION_MESSAGE);
-        	isGameCompleted = true;
+    public boolean checkForGameCompletion() {
+        boolean isGameCompleted = false;
+        if (player.getTotalValue() == 21 && dealer.getDealerValue() == 21) {
+            JOptionPane.showMessageDialog(null, "It's a tie, will start a new game", "Tie", JOptionPane.INFORMATION_MESSAGE);
+            isGameCompleted = true;
+        } else if (player.getTotalValue() == 21) {
+            JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Won the game", JOptionPane.INFORMATION_MESSAGE);
+            isGameCompleted = true;
+        } else if (dealer.getDealerValue() == 21) {
+            JOptionPane.showMessageDialog(null, "Tough Luck: Dealer got a 21", "Lost the game", JOptionPane.INFORMATION_MESSAGE);
+            isGameCompleted = true;
         }
-        else if( player.getTotalValue() == 21 )
-        {
-        	JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Won the game", JOptionPane.INFORMATION_MESSAGE);
-        	isGameCompleted = true;
-        }
-        else if( dealer.getTotalValue() == 21 )
-        {
-        	JOptionPane.showMessageDialog(null, "Tough Luck: Dealer got a 21", "Lost the game", JOptionPane.INFORMATION_MESSAGE);
-        	isGameCompleted = true;
-        }
-        if(isGameCompleted)
-        {
-        	playGame.newGame();
+        if (isGameCompleted) {
+            playGame.newGame();
         }
         return isGameCompleted;
     }
 
-    public void pressStandButton()
-    {
-    	buttonStand.doClick();
+    public void pressStandButton() {
+        buttonStand.doClick();
     }
 }
