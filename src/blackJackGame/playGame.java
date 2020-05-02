@@ -27,6 +27,7 @@ public class playGame implements Runnable {
     }
 
     public static void newRound() {
+    	System.out.println("Players Score is: " + dealer.getPlayers().get(0).getScore());
     	System.out.println("Starting New Round...");
     	dealer.newRound();
         gui.dispose();

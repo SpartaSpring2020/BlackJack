@@ -232,7 +232,8 @@ public class GUI extends JFrame {
             eg.setFont(labelFont);
             eg.drawString("PLAYER", 100, 275);
             eg.drawString("DEALER", 100, 100);
-            eg.drawString("SCORE", 100, 500);
+            eg.drawString("SCORE: ", 100, 500);
+            eg.drawString(String.valueOf(dealer.getPlayers().get(0).getScore()), 176, 500);
 
 
         }

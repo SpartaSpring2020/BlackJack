@@ -32,7 +32,10 @@ public class Player {
     
     public void hasWon() {
     	score = score + 1;
-    	System.out.println("Player's Score: " + score);
+    }
+    
+    public int getScore() {
+    	return score;
     }
 
 
