@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Player {
     private Hand myHand = new Hand();
     private String myName;
-    private int score;
+    private int score = 0;
 
     public Player(String name) {
         if (name.isEmpty()) {
@@ -23,6 +23,19 @@ public class Player {
     }
     public int getTotalValue() {
         return myHand.getHandValue();
+    }
+    
+    public void emptyHand() {
+    	myHand = null;
+    	myHand = new Hand();
+    }
+    
+    public void hasWon() {
+    	score = score + 1;
+    }
+    
+    public int getScore() {
+    	return score;
     }
 
 

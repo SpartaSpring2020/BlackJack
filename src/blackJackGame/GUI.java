@@ -49,6 +49,7 @@ public class GUI extends JFrame {
 
 
     public Dealer dealer;
+    public ArrayList <Player> players = new ArrayList <Player>();
     public Player player;
 
 
@@ -106,10 +107,38 @@ public class GUI extends JFrame {
         }
     }
     
-  
+    public void addPlayerCard(Card newCard) {
+        //Add validations
+        dealer.getPlayers().get(0).getHand().addCard(newCard);
+    }
+    public void addDealerCard(Card newCard) {
+        //Add validations
+        dealer.getHand().addCard(newCard);
+    }
 
+    public boolean checkForGameCompletion() {
+        boolean isGameCompleted = false;
+        if (player.getTotalValue() == 21 && dealer.getDealerValue() == 21) {
+            JOptionPane.showMessageDialog(null, "It's a tie, will start a new game", "Tie", JOptionPane.INFORMATION_MESSAGE);
+            isGameCompleted = true;
+        } else if (player.getTotalValue() == 21) {
+            JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Won the game", JOptionPane.INFORMATION_MESSAGE);
+            isGameCompleted = true;
+        } else if (dealer.getDealerValue() == 21) {
+            JOptionPane.showMessageDialog(null, "Tough Luck: Dealer got a 21", "Lost the game", JOptionPane.INFORMATION_MESSAGE);
+            isGameCompleted = true;
+        }
+        if (isGameCompleted) {
+            playGame.newRound();
+        }
+        return isGameCompleted;
+    }
 
-    public GUI() {
+    public void pressStandButton() {
+        buttonStand.doClick();
+    }
+    
+    public GUI(Dealer d) {
 
 
         this.setSize(width, height);
@@ -156,10 +185,10 @@ public class GUI extends JFrame {
         buttonNew.setBackground(colorButton);
         buttonNew.setText("NEW GAME");
         board.add(buttonNew);
-
-
-        dealer = new Dealer();
+        
+        this.dealer = d;
         player = dealer.getPlayers().get(0);
+        
         dealer.deal();
 
         ArrayList < Card > playerCards = new ArrayList < Card > ();
@@ -176,11 +205,12 @@ public class GUI extends JFrame {
 
         if (dealer.getHand().getHandValue() == 21) {
             JOptionPane.showMessageDialog(null, "Dealer Got 21", "You Lose!", JOptionPane.INFORMATION_MESSAGE);
-            playGame.newGame();
+            playGame.newRound();
         }
         if (dealer.getPlayers().get(0).getHand().getHandValue() == 21) {
             JOptionPane.showMessageDialog(null, "Excellent: It's 21", "You Win!", JOptionPane.INFORMATION_MESSAGE);
-            playGame.newGame();
+            player.hasWon();
+            playGame.newRound();
         }
 
     }
@@ -202,43 +232,13 @@ public class GUI extends JFrame {
             eg.setFont(labelFont);
             eg.drawString("PLAYER", 100, 275);
             eg.drawString("DEALER", 100, 100);
-            eg.drawString("SCORE", 100, 500);
-
-
+            eg.drawString("SCORE: ", 100, 500);
+            eg.drawString(String.valueOf(dealer.getPlayers().get(0).getScore()), 176, 500);
 
 
         }
 
     }
 
-    public void addPlayerCard(Card newCard) {
-        //Add validations
-        dealer.getPlayers().get(0).getHand().addCard(newCard);
-    }
-    public void addDealerCard(Card newCard) {
-        //Add validations
-        dealer.getHand().addCard(newCard);
-    }
-
-    public boolean checkForGameCompletion() {
-        boolean isGameCompleted = false;
-        if (player.getTotalValue() == 21 && dealer.getDealerValue() == 21) {
-            JOptionPane.showMessageDialog(null, "It's a tie, will start a new game", "Tie", JOptionPane.INFORMATION_MESSAGE);
-            isGameCompleted = true;
-        } else if (player.getTotalValue() == 21) {
-            JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Won the game", JOptionPane.INFORMATION_MESSAGE);
-            isGameCompleted = true;
-        } else if (dealer.getDealerValue() == 21) {
-            JOptionPane.showMessageDialog(null, "Tough Luck: Dealer got a 21", "Lost the game", JOptionPane.INFORMATION_MESSAGE);
-            isGameCompleted = true;
-        }
-        if (isGameCompleted) {
-            playGame.newGame();
-        }
-        return isGameCompleted;
-    }
-
-    public void pressStandButton() {
-        buttonStand.doClick();
-    }
+  
 }
