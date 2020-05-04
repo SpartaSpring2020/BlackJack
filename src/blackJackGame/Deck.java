@@ -36,6 +36,11 @@ public class Deck {
         return cards;
     }
     public Card drawCard() {
+    	if( null == cards || cards.isEmpty() || null == cards.get(0) )
+    	{
+    		generateDeck();
+    		shuffleDeck();
+    	}
         Card myCard = cards.get(0);
         cards.remove(0);
         return myCard;
