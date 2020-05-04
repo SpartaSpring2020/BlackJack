@@ -86,7 +86,7 @@ public class GUI extends JFrame {
     public void updatePlayerCards() {
         loadPlayerCards(dealer.getPlayers().get(0).getHand().getCards());
         String handValStr = String.valueOf(dealer.getPlayers().get(0).getTotalValue());
-        JOptionPane.showMessageDialog(null, handValStr, "Your hand's value is: ", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, handValStr, "Your hand's value is: ", JOptionPane.INFORMATION_MESSAGE);
 
     }
     public void loadPlayerCards(ArrayList < Card > cards) {
@@ -106,7 +106,7 @@ public class GUI extends JFrame {
             imageLabel.setVisible(true);
         }
     }
-    
+
     public void addPlayerCard(Card newCard) {
         //Add validations
         dealer.getPlayers().get(0).getHand().addCard(newCard);
@@ -137,7 +137,7 @@ public class GUI extends JFrame {
     public void pressStandButton() {
         buttonStand.doClick();
     }
-    
+
     public GUI(Dealer d) {
 
 
@@ -185,23 +185,23 @@ public class GUI extends JFrame {
         buttonNew.setBackground(colorButton);
         buttonNew.setText("NEW GAME");
         board.add(buttonNew);
-        
+
         this.dealer = d;
         player = dealer.getPlayers().get(0);
-        
+
         dealer.deal();
 
         ArrayList < Card > playerCards = new ArrayList < Card > ();
         ArrayList < Card > dealerCards = new ArrayList < Card > ();
         dealerCards = dealer.getHand().getCards();
         playerCards = player.getHand().getCards();
-        
+
         loadDealerCards(dealerCards);
         loadPlayerCards(playerCards);
-        
+
         //Value of Hand Message
         String handValStr = String.valueOf(dealer.getPlayers().get(0).getTotalValue());
-        JOptionPane.showMessageDialog(null, handValStr, "Your hand's value is: ", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, handValStr, "Your hand's value is: ", JOptionPane.INFORMATION_MESSAGE);
 
         if (dealer.getHand().getHandValue() == 21) {
             JOptionPane.showMessageDialog(null, "Dealer Got 21", "You Lose!", JOptionPane.INFORMATION_MESSAGE);
@@ -232,13 +232,17 @@ public class GUI extends JFrame {
             eg.setFont(labelFont);
             eg.drawString("PLAYER", 100, 275);
             eg.drawString("DEALER", 100, 100);
-            eg.drawString("SCORE: ", 100, 500);
-            eg.drawString(String.valueOf(dealer.getPlayers().get(0).getScore()), 176, 500);
+            eg.drawString("GAMES WON: ", 100, 500);
+            eg.drawString("PLAYER HAND: ", 500, 500);
+            eg.drawString("DEALER HAND: ", 500, 550);
+            eg.drawString(String.valueOf(dealer.getPlayers().get(0).getScore()), 246, 500);
+            eg.drawString(String.valueOf(dealer.getPlayerValue()), 676, 500);
+            eg.drawString(String.valueOf(dealer.getDealerValue()), 676, 550);
 
 
         }
 
     }
 
-  
+
 }

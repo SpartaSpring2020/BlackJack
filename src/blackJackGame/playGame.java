@@ -30,6 +30,7 @@ public class playGame implements Runnable {
     	System.out.println("Players Score is: " + dealer.getPlayers().get(0).getScore());
     	System.out.println("Starting New Round...");
     	dealer.newRound();
+    	gui.setVisible(false);
         gui.dispose();
         gui = new GUI(dealer);
         new Thread(new playGame()).start();
@@ -38,11 +39,10 @@ public class playGame implements Runnable {
     
     public static void newGame() {
     	System.out.println("Starting New Game...");
+    	gui.setVisible(false);
     	gui.dispose();
     	dealer = null;
-    	dealer = new Dealer();
-
-    	
+    	dealer = new Dealer();    	
         gui = new GUI(dealer);
         new Thread(new playGame()).start();
     }
