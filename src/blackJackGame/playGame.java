@@ -7,6 +7,7 @@ public class playGame implements Runnable {
 
 	static Dealer dealer = null;
 	static GUI gui = null;
+
 	static int numOfPlayers = 2;
 
 	public static void main(String[] args) {
