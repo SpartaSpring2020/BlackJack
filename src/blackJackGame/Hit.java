@@ -2,6 +2,7 @@ package blackJackGame;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Hit extends playGame implements ActionListener {
 
@@ -12,9 +13,19 @@ public class Hit extends playGame implements ActionListener {
         Dealer dealer = gui.dealer;
         Deck cardsDeck = dealer.getCardsDeck();
         Card topCard = cardsDeck.drawCard();
-        Player player = gui.player;
-        gui.addPlayerCard(topCard);
-        gui.updatePlayerCards();
+        ArrayList<Player> players = dealer.players;
+        Player player = null;
+        int playerNum = -1;
+        for( int cnt = 0; cnt < players.size(); ++cnt )
+        {
+        	if(players.get(cnt).isCurrentPlayer())
+        	{
+        		player = players.get(cnt);
+        		playerNum = cnt+1;
+        	}
+        }
+        gui.addPlayerCard(player, topCard);
+        gui.updatePlayerCards(playerNum);
         //Validate for total
         int playerTotal = player.getTotalValue();
         if (playerTotal > 21) {
