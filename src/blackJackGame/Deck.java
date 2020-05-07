@@ -6,7 +6,20 @@ import java.util.Random;
 
 
 public class Deck {
-    ArrayList < Card > cards = new ArrayList < Card > ();
+    ArrayList < Card > cards; 
+    private static Deck instance;
+    
+    public static Deck getInstance() {
+    	
+    	if (instance == null) {
+    		instance = new Deck();
+    	}
+    	return instance;
+    }
+    
+    private Deck() {
+    	cards = new ArrayList < Card > ();
+    }
 
     public void generateDeck() {
         for (int i = 2; i < 15; i++) {

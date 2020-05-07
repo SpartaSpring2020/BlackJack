@@ -5,8 +5,9 @@ import java.util.ArrayList;
 public class playGame implements Runnable {
 
 
-	static Dealer dealer = null;// = new Dealer();
-	static GUI gui = null;//new GUI(dealer);
+	static Dealer dealer = null;
+	static GUI gui = null;
+
 	static int numOfPlayers = 2;
 
 	public static void main(String[] args) {

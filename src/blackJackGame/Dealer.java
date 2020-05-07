@@ -10,7 +10,8 @@ public class Dealer {
 	//private int score;
 
 	public Dealer(int numOfPlayers) {
-		cardsDeck = new Deck();
+		cardsDeck = Deck.getInstance();
+		
 		cardsDeck.generateDeck();
 		cardsDeck.shuffleDeck();
 		for( int cnt = 0; cnt < numOfPlayers; ++cnt )
