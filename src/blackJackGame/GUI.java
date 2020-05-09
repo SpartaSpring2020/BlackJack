@@ -268,6 +268,7 @@ public class GUI extends JFrame {
 			eg.setColor(white);
 			eg.setFont(labelFont);
 			eg.drawString("DEALER", 100, 100);
+			eg.drawString("BETTING: ", 1000, 680);
 			eg.drawString("GAMES WON: ", 100, 700);
 			//eg.drawString(String.valueOf(dealer.getPlayers().get(0).getScore()), 246, 700); //Games Won
 			for( int cnt = 0; cnt < dealer.getPlayers().size(); ++cnt )
