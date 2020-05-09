@@ -23,8 +23,8 @@ public class BettingGui {
 		
 		Caller obj = new Caller();
 
-}
 	}
+}
 
 class Caller extends JFrame
 {
@@ -37,14 +37,11 @@ class Caller extends JFrame
 	    JButton player1_dollar50 = new JButton();
 	    JButton player1_dollar100 = new JButton();
 	    
-	    
-	    
 		 JButton player2_dollar10 = new JButton();
 		    JButton player2_dollar20 = new JButton();
 		    
 		    JButton player2_dollar50 = new JButton();
-		    JButton player2_dollar100 = new JButton();
-		
+		    JButton player2_dollar100 = new JButton();		
 	    
 	    JButton skip = new JButton();
 	    Font fontButton = new Font("Times New Roman", Font.PLAIN, 20);
@@ -62,7 +59,6 @@ class Caller extends JFrame
 	public Caller()
 	{
 		
-
 		player1_dollar10.setBounds(100, 200, 160, 40);
 		player1_dollar10.setFont(fontButton);
 		player1_dollar10.setBackground(colorButton);
@@ -147,9 +143,7 @@ class Caller extends JFrame
 		F2.add(player2_dollar100);
 		F2.add(skip);
 		F2.add(playgame);
-		
-		
-
+		//Dealer dealer = new Dealer();
 		
 		
 		playgame.addActionListener(new ActionListener() {
@@ -157,7 +151,7 @@ class Caller extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				// TODO Auto-generated method stu
-			new GUI(null);	
+				playGame.newGame();	
 			dispose();
 			}
 		});
@@ -169,7 +163,7 @@ class Caller extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				// TODO Auto-generated method stu
-			new GUI(null);	
+				playGame.newGame();		
 			dispose();
 			}
 		});
@@ -193,7 +187,7 @@ class Caller extends JFrame
 				Color white = new Color(255, 255, 255);
 				eg.setColor(white);
 				eg.setFont(labelFont);
-				eg.drawString("BETTING", 100, 100);
+				eg.drawString("BETTING", 425, 100);
 				eg.drawString("PLAYER1", 225, 150);
 				eg.drawString("PLAYER2", 625, 150);
 		}
@@ -201,3 +195,4 @@ class Caller extends JFrame
 
 	}
 	}
+

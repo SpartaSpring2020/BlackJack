@@ -35,6 +35,7 @@ public class Player {
 		score = score + 1;
 	}
 
+
 	public int getScore() {
 		return score;
 	}
