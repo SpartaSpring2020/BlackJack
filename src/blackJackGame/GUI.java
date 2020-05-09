@@ -24,9 +24,7 @@ public class GUI extends JFrame {
 	JButton buttonYes = new JButton();
 	JButton buttonNo = new JButton();
 	JButton buttonNew = new JButton();
-    JButton dollar10 = new JButton();
-    JButton dollar20 = new JButton();
-	
+   
 	int gridX = 50;
 	int gridY = 50;
 	int gridW = 900; //Grid Width
@@ -145,6 +143,7 @@ public class GUI extends JFrame {
 			return;
 		}
 
+
 		this.setSize(width, height);
 		this.setTitle("BlackJack");
 		this.setVisible(true);
@@ -153,6 +152,7 @@ public class GUI extends JFrame {
 		Board board = new Board();
 		this.setContentPane(board);
 		this.setLayout(null);
+		
 
 		//Hit button
 		Hit hit = new Hit();
@@ -164,24 +164,6 @@ public class GUI extends JFrame {
 		board.add(buttonHit);
 
 
-		//$10 button
-		//Dollar10 d10 = new Dollar10();
-		//dollar10.addActionListener(d10);
-		dollar10.setBounds(1000, 700, 160, 40);
-		dollar10.setFont(fontButton);
-		dollar10.setBackground(colorButton);
-		dollar10.setText("$10");
-		board.add(dollar10);
-
-		//$20 button
-		//Dollar20 d20 = new Dollar20();
-		//dollar20.addActionListener(d20);
-		dollar20.setBounds(1000, 750, 160, 40);
-		dollar20.setFont(fontButton);
-		dollar20.setBackground(colorButton);
-		dollar20.setText("$20");
-		board.add(dollar20);
-		
 		//Stand button
 		Stand stand = new Stand();
 		buttonStand.addActionListener(stand);
@@ -209,12 +191,17 @@ public class GUI extends JFrame {
 		buttonNew.setText("NEW GAME");
 		board.add(buttonNew);
 
+
+		
+		
 		this.dealer = dealer;
 		dealer.deal();
 		ArrayList < Card > dealerCards = new ArrayList < Card > ();
 		dealerCards = dealer.getHand().getCards();
 		loadDealerCards(dealerCards);
 
+		
+		
 		for( int cnt = 0; cnt < dealer.getPlayers().size(); ++cnt )
 		{
 			Player player = dealer.getPlayers().get(cnt);
@@ -241,10 +228,11 @@ public class GUI extends JFrame {
 			if (dealer.getPlayers().get(0).getHand().getHandValue() == 21) {
 				JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Player"+(cnt+1)+" Win!", JOptionPane.INFORMATION_MESSAGE);
 				player.hasWon();
+				
 				playGame.newRound();
 			}
 		}
-
+		
 	}
 
 	public class Board extends JPanel {
@@ -268,7 +256,7 @@ public class GUI extends JFrame {
 			eg.setColor(white);
 			eg.setFont(labelFont);
 			eg.drawString("DEALER", 100, 100);
-			eg.drawString("BETTING: ", 1000, 680);
+			eg.drawString("PLAYER1 BETTING: Amount:", 80, 680);
 			eg.drawString("GAMES WON: ", 100, 700);
 			//eg.drawString(String.valueOf(dealer.getPlayers().get(0).getScore()), 246, 700); //Games Won
 			for( int cnt = 0; cnt < dealer.getPlayers().size(); ++cnt )
