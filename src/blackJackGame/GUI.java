@@ -24,8 +24,9 @@ public class GUI extends JFrame {
 	JButton buttonYes = new JButton();
 	JButton buttonNo = new JButton();
 	JButton buttonNew = new JButton();
-
-
+    JButton dollar10 = new JButton();
+    JButton dollar20 = new JButton();
+	
 	int gridX = 50;
 	int gridY = 50;
 	int gridW = 900; //Grid Width
@@ -162,6 +163,25 @@ public class GUI extends JFrame {
 		buttonHit.setText("HIT");
 		board.add(buttonHit);
 
+
+		//$10 button
+		//Dollar10 d10 = new Dollar10();
+		//dollar10.addActionListener(d10);
+		dollar10.setBounds(1000, 700, 160, 40);
+		dollar10.setFont(fontButton);
+		dollar10.setBackground(colorButton);
+		dollar10.setText("$10");
+		board.add(dollar10);
+
+		//$20 button
+		//Dollar20 d20 = new Dollar20();
+		//dollar20.addActionListener(d20);
+		dollar20.setBounds(1000, 750, 160, 40);
+		dollar20.setFont(fontButton);
+		dollar20.setBackground(colorButton);
+		dollar20.setText("$20");
+		board.add(dollar20);
+		
 		//Stand button
 		Stand stand = new Stand();
 		buttonStand.addActionListener(stand);
