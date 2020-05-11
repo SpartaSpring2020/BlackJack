@@ -5,18 +5,19 @@ import java.util.ArrayList;
 public class playGame implements Runnable {
 
 
-	static Dealer dealer = null;
-	static GUI gui = null;
+	private static Dealer dealer = null;
+	private static GUI gui = null;
 
 	static int numOfPlayers = 2;
 
 	public static void main(String[] args) {
-		dealer = new Dealer(numOfPlayers);
-		gui = new GUI(dealer);
-		boolean isGameCompleted = gui.checkForGameCompletion();
-		if (!isGameCompleted) {
-			new Thread(new playGame()).start();
-		}
+		//dealer = new Dealer(numOfPlayers);
+		//gui = new GUI(dealer);
+		newGame();
+//		boolean isGameCompleted = gui.checkForGameCompletion();
+//		if (!isGameCompleted) {
+//			new Thread(new playGame()).start();
+//		}
 	}
 
 	public void run() {
@@ -30,7 +31,7 @@ public class playGame implements Runnable {
 	}
 
 	public static void newRound() {
-		System.out.println("Players Score is: " + dealer.getPlayers().get(0).getScore());
+		System.out.println("Players Score is: " + dealer.getPlayers().get(0).getGamesWon());
 		System.out.println("Starting New Round...");
 		dealer.newRound();
 		if( null != gui )
