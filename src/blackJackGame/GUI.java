@@ -24,7 +24,8 @@ public class GUI extends JFrame {
 	JButton buttonYes = new JButton();
 	JButton buttonNo = new JButton();
 	JButton buttonNew = new JButton();
-   
+
+
 	int gridX = 50;
 	int gridY = 50;
 	int gridW = 900; //Grid Width
@@ -215,7 +216,6 @@ public class GUI extends JFrame {
 			return;
 		}
 
-
 		this.setSize(width, height);
 		this.setTitle("BlackJack");
 		this.setVisible(true);
@@ -224,7 +224,6 @@ public class GUI extends JFrame {
 		Board board = new Board();
 		this.setContentPane(board);
 		this.setLayout(null);
-		
 
 		//Hit button
 		Hit hit = new Hit();
@@ -234,7 +233,6 @@ public class GUI extends JFrame {
 		buttonHit.setBackground(colorButton);
 		buttonHit.setText("HIT");
 		board.add(buttonHit);
-
 
 		//Stand button
 		Stand stand = new Stand();
@@ -263,17 +261,12 @@ public class GUI extends JFrame {
 		buttonNew.setText("NEW GAME");
 		board.add(buttonNew);
 
-
-		
-		
 		this.dealer = dealer;
 		dealer.deal();
 		ArrayList < Card > dealerCards = new ArrayList < Card > ();
 		dealerCards = dealer.getHand().getCards();
 		loadDealerCards(dealerCards);
 
-		
-		
 		for( int cnt = 0; cnt < dealer.getPlayers().size(); ++cnt )
 		{
 			Player player = dealer.getPlayers().get(cnt);
@@ -300,10 +293,9 @@ public class GUI extends JFrame {
 			if (dealer.getPlayers().get(0).getHand().getHandValue() == 21) {
 				JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Player"+(cnt+1)+" Win!", JOptionPane.INFORMATION_MESSAGE);
 				player.hasWon();
-				
 				playGame.newRound();
 			}
-		}
+		}*/
 
 	}
 

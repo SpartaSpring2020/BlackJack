@@ -34,9 +34,6 @@ public class Player {
 	public int getGamesWon() {
 		return gamesWon;
 	}
-
-	public int getScore() {
-		return score;
 	
 	public void setGamesWon(int gamesWon) {
 		this.gamesWon = gamesWon;
