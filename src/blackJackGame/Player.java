@@ -7,6 +7,7 @@ public class Player {
 	private String myName;
 	private int gamesWon = 0;
 	private boolean isHitComplete = false;
+	private int balance = 0;
 
 	public Player(String name) {
 		if (name.isEmpty()) {
@@ -14,6 +15,8 @@ public class Player {
 		} else {
 			myName = name;
 		}
+		
+		balance = 300;
 	}
 
 	public Hand getHand() {
@@ -57,5 +60,14 @@ public class Player {
 	public void setHitComplete()
 	{
 		isHitComplete = true;
+	}
+	
+	public int getBalance()
+	{
+		return balance;
+	}
+	
+	public void setBalance(int bal) {
+		balance = bal;
 	}
 }
