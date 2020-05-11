@@ -11,13 +11,7 @@ public class playGame implements Runnable {
 	static int numOfPlayers = 2;
 
 	public static void main(String[] args) {
-		//dealer = new Dealer(numOfPlayers);
-		//gui = new GUI(dealer);
 		newGame();
-//		boolean isGameCompleted = gui.checkForGameCompletion();
-//		if (!isGameCompleted) {
-//			new Thread(new playGame()).start();
-//		}
 	}
 
 	public void run() {

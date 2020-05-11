@@ -7,7 +7,7 @@ public class Dealer {
 	private Deck cardsDeck;
 	ArrayList < Player > players = new ArrayList < Player > ();
 	private Hand myHand = new Hand();
-	//private int score;
+	private int bettingPot = 0;
 
 	public Dealer(int numOfPlayers) {
 		cardsDeck = Deck.getInstance();
@@ -19,7 +19,6 @@ public class Dealer {
 			Player player = new Player("Name"+(cnt+1));
 			players.add(player);
 		}
-		//players.get(0).setToPlayerActivity(true);
 	}
 
 	public void deal() {
@@ -30,12 +29,11 @@ public class Dealer {
 				cardsDeck.generateDeck();
 				cardsDeck.shuffleDeck();
 			}
-			//Card topCard = cardsDeck.getDeck().get(0);
-			//cardsDeck.getDeck().remove(0);
+
 			Card topCard = cardsDeck.drawCard();
 			if( cnt % (players.size()+1) == 0 )
 			{
-				//Dealer Cards
+
 				myHand.addCard(topCard);
 			}
 			else
@@ -43,24 +41,7 @@ public class Dealer {
 				players.get((cnt % (players.size()+1))-1).getHand().addCard(topCard);
 			}
 		}
-		/*for (Player p: players) {
-			Card topCard;
-			for (int i = 1; i <= 4; i++) {
-				if( null == cardsDeck || null == cardsDeck.getDeck() || null == cardsDeck.getDeck().get(0) )
-				{
-					cardsDeck.generateDeck();
-					cardsDeck.shuffleDeck();
-				}
-				topCard = cardsDeck.getDeck().get(0);
-				if (i % 2 == 0) {
-					myHand.addCard(topCard);
-
-				} else {
-					p.getHand().addCard(topCard);
-				}
-			}
-
-		}*/
+		
 	}
 
 	public void newRound() {
@@ -92,6 +73,20 @@ public class Dealer {
 	public void emptyHand() {
 		myHand = null;
 		myHand = new Hand();
+	}
+	
+	public void addMoneytoPot(int money) {
+		bettingPot = bettingPot + money;
+	}
+	
+	public int getPot()
+	{
+		return bettingPot;
+	}
+	
+	public void emptyPot()
+	{
+		bettingPot = 0;
 	}
 
 

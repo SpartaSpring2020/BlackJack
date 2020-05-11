@@ -146,65 +146,6 @@ public class GUI extends JFrame {
 		dealer.getHand().addCard(newCard);
 	}
 
-	/*public boolean checkForGameCompletion() {
-		boolean isGameCompleted = false;
-
-
-		int p1Count = dealer.players.get(0).getTotalValue();
-		int p2Count = dealer.players.get(1).getTotalValue();
-		int dealerCount = dealer.getDealerValue();
-		if( dealerCount == 21 )
-		{
-			if( p1Count == 21 )
-			{
-				JOptionPane.showMessageDialog(null, "It's a tie, will start a new game", "Dealer and Player1 Tie", JOptionPane.INFORMATION_MESSAGE);
-			}
-			if(p2Count == 21)
-			{
-				JOptionPane.showMessageDialog(null, "It's a tie, will start a new game", "Dealer and Player2 Tie", JOptionPane.INFORMATION_MESSAGE);
-			}
-			if( p1Count < 21 && p2Count < 21 )
-			{
-				JOptionPane.showMessageDialog(null, "Tough Luck: Dealer got a 21", "Lost the game", JOptionPane.INFORMATION_MESSAGE);
-			}
-			isGameCompleted = true;
-		}
-		else
-		{
-			if( p1Count == 21 )
-			{
-				JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Player1 Won the game", JOptionPane.INFORMATION_MESSAGE);
-				dealer.players.get(0).setGamesWon(dealer.players.get(0).getGamesWon()+1);
-				isGameCompleted = true;
-			}
-			if(p2Count == 21)
-			{
-				JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Player2 Won the game", JOptionPane.INFORMATION_MESSAGE);
-				dealer.players.get(1).setGamesWon(dealer.players.get(1).getGamesWon()+1);
-				isGameCompleted = true;
-			}
-		}
-		//for( int cnt = 0; cnt < dealer.players.size(); ++cnt )
-		{
-			Player player = dealer.players.get(cnt);
-
-			if (player.getTotalValue() == 21 && dealer.getDealerValue() == 21) {
-				JOptionPane.showMessageDialog(null, "It's a tie, will start a new game", "Tie", JOptionPane.INFORMATION_MESSAGE);
-				isGameCompleted = true;
-			} else if (player.getTotalValue() == 21) {
-				JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Won the game", JOptionPane.INFORMATION_MESSAGE);
-				isGameCompleted = true;
-			} else if (dealer.getDealerValue() == 21) {
-				JOptionPane.showMessageDialog(null, "Tough Luck: Dealer got a 21", "Lost the game", JOptionPane.INFORMATION_MESSAGE);
-				isGameCompleted = true;
-			}
-			if (isGameCompleted) {
-				playGame.newRound();
-			}
-		}
-		return isGameCompleted;
-	}*/
-
 	public void pressStandButton() {
 		buttonStand.doClick();
 	}
@@ -263,14 +204,14 @@ public class GUI extends JFrame {
 		board.add(buttonNew);
 
 		//Betting Button
-				Betting betting= new Betting();
-				buttonBetting.addActionListener(betting);
-				buttonBetting.setBounds(1000, 570, 160, 40);
-				buttonBetting.setFont(fontButton);
-				buttonBetting.setBackground(colorButton);
-				buttonBetting.setText("BEETING");
-				board.add(buttonBetting);	
-		
+		Betting betting= new Betting();
+		buttonBetting.addActionListener(betting);
+		buttonBetting.setBounds(1000, 570, 160, 40);
+		buttonBetting.setFont(fontButton);
+		buttonBetting.setBackground(colorButton);
+		buttonBetting.setText("BETTING");
+		board.add(buttonBetting);	
+	
 
 		
 
@@ -291,24 +232,6 @@ public class GUI extends JFrame {
 			else
 				player.setToPlayerActivity(false);
 		}
-
-		//Value of Hand Message
-		//String handValStr = String.valueOf(dealer.getPlayers().get(0).getTotalValue());
-		//JOptionPane.showMessageDialog(null, handValStr, "Your hand's value is: ", JOptionPane.INFORMATION_MESSAGE);
-
-		/*if (dealer.getHand().getHandValue() == 21) {
-			JOptionPane.showMessageDialog(null, "Dealer Got 21", "You Lose!", JOptionPane.INFORMATION_MESSAGE);
-			playGame.newRound();
-		}
-		for( int cnt = 0; cnt < dealer.getPlayers().size(); ++cnt )
-		{
-			Player player = dealer.getPlayers().get(cnt);
-			if (dealer.getPlayers().get(0).getHand().getHandValue() == 21) {
-				JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Player"+(cnt+1)+" Win!", JOptionPane.INFORMATION_MESSAGE);
-				player.hasWon();
-				playGame.newRound();
-			}
-		}*/
 
 	}
 
@@ -337,6 +260,11 @@ public class GUI extends JFrame {
 			eg.drawString(String.valueOf(dealer.getPlayers().get(0).getGamesWon()), 300, 700);
 			eg.drawString("Player2 Total Wins: ", 100, 750);
 			eg.drawString(String.valueOf(dealer.getPlayers().get(1).getGamesWon()), 300, 750);
+			eg.drawString("Player1 Balance: $", 800, 700);
+			eg.drawString(String.valueOf(dealer.getPlayers().get(0).getBalance()), 980, 700);
+			eg.drawString("Player2 Balance: $", 800, 750);
+			eg.drawString(String.valueOf(dealer.getPlayers().get(1).getBalance()), 980, 750);
+			
 			//eg.drawString(String.valueOf(dealer.getPlayers().get(0).getScore()), 246, 700); //Games Won
 			for( int cnt = 1; cnt <= dealer.getPlayers().size(); ++cnt )
 			{

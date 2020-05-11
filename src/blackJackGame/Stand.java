@@ -98,22 +98,27 @@ public class Stand implements ActionListener {
 		}
 		dealerCount = dealer.getDealerValue();
 		gui.refreshDealerCards();
-		displayResult(dealerCount, p1Count, players.get(0), 1);
-		displayResult(dealerCount, p2Count, players.get(1), 2);
+		displayResult(dealerCount, p1Count, players.get(0), 1, dealer);
+		displayResult(dealerCount, p2Count, players.get(1), 2, dealer);
 		
 	}
 	
-	private void displayResult(int dealerCount, int playerCount, Player player, int playerNum)
+	private void displayResult(int dealerCount, int playerCount, Player player, int playerNum, Dealer deal)
 	{
 		if( playerCount > 21 )
 		{
 			JOptionPane.showMessageDialog(null, "Player"+playerNum+"'s total exceeded 21", "Player"+playerNum+" Lost", JOptionPane.INFORMATION_MESSAGE);
+			deal.emptyPot();
 			return;
 		}
 		if(dealerCount > 21 )
 		{
 			JOptionPane.showMessageDialog(null, "Dealer's total exceeded 21", "Player"+playerNum+" Won", JOptionPane.INFORMATION_MESSAGE);
 			player.setGamesWon(player.getGamesWon()+1);
+			int pot = deal.getPot();
+			int prevBal = player.getBalance();
+			player.setBalance(prevBal + pot);
+			deal.emptyPot();
 			return;
 		}
 		
@@ -122,16 +127,22 @@ public class Stand implements ActionListener {
 			//Player won
 			JOptionPane.showMessageDialog(null, "Player"+playerNum+"'s total is more than Dealer's", "Player"+playerNum+" Won", JOptionPane.INFORMATION_MESSAGE);
 			player.setGamesWon(player.getGamesWon()+1);
+			int pot = deal.getPot();
+			int prevBal = player.getBalance();
+			player.setBalance(prevBal + pot);
+			deal.emptyPot();
 		}
 		else if( playerCount < dealerCount )
 		{
 			//Player lost
 			JOptionPane.showMessageDialog(null, "Player"+playerNum+"'s total is less than Dealer's", "Player"+playerNum+" Lost", JOptionPane.INFORMATION_MESSAGE);
+			deal.emptyPot();
 		}
 		if( playerCount == dealerCount )
 		{
 			//Tie
 			JOptionPane.showMessageDialog(null, "Player"+playerNum+" and Dealer got same total", "It's a Tie", JOptionPane.INFORMATION_MESSAGE);
+			deal.emptyPot();
 		}
 	}
 }
