@@ -5,7 +5,7 @@ public class Player {
 	private Hand myHand = new Hand();
 	private boolean isCurrentPlayer = false;
 	private String myName;
-	private int score = 0;
+	private int gamesWon = 0;
 	private boolean isHitComplete = false;
 
 	public Player(String name) {
@@ -31,14 +31,14 @@ public class Player {
 		myHand = new Hand();
 	}
 
-	public void hasWon() {
-		score = score + 1;
+	public int getGamesWon() {
+		return gamesWon;
 	}
-
-	public int getScore() {
-		return score;
+	
+	public void setGamesWon(int gamesWon) {
+		this.gamesWon = gamesWon;
 	}
-
+	
 	public boolean isCurrentPlayer()
 	{
 		return isCurrentPlayer;
