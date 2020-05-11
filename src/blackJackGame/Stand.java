@@ -70,79 +70,105 @@ public class Stand implements ActionListener {
 					Card topCard = cardsDeck.drawCard();
 					gui.addDealerCard(topCard);
 					gui.refreshDealerCards();
-					//Validate for total
-					if (dealer.getDealerValue() > 21) {
-						//Total with new card is more than 21
-						//JOptionPane.showMessageDialog(null, "Dealer's Total exeeded 21", "Won the round", JOptionPane.INFORMATION_MESSAGE);
-						//players.get(cnt).hasWon();
-						break;
-					} else if (dealer.getDealerValue() == 21) {
-						if (playerTotal == 21) {
-							//tie
-							//JOptionPane.showMessageDialog(null, "It's a tie, will start a new round", "Tie", JOptionPane.INFORMATION_MESSAGE);
-						} else {
-							//Dealer won
-							//JOptionPane.showMessageDialog(null, "Dealer's total is more than your's", "Lost the round", JOptionPane.INFORMATION_MESSAGE);
-						}
-						break;
-					} else if (dealer.getDealerValue() > playerTotal) {
-
-						//JOptionPane.showMessageDialog(null, "Dealer's total is more than your's", "Lost the round", JOptionPane.INFORMATION_MESSAGE);
-						break;
-
-					}
 				}
-			} else if (playerTotal < dealerTotal) {
-				//JOptionPane.showMessageDialog(null, "Dealer's total is more than your's", "Lost the round", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 		dealerCount = dealer.getDealerValue();
 		gui.refreshDealerCards();
-		displayResult(dealerCount, p1Count, players.get(0), 1, dealer);
-		displayResult(dealerCount, p2Count, players.get(1), 2, dealer);
 		
+		
+		displayResult(dealer);
+
 	}
+		private void displayResult(Dealer deal)
+		{
+			Player player1 = deal.getPlayers().get(0);
+			Player player2 = deal.getPlayers().get(1);
+			int dealerCount = deal.getDealerValue();
+			int p1Count = player1.getTotalValue();
+			int p2Count = player2.getTotalValue();
+			boolean dealerWins = false;
+			boolean dealerLoss = false;
+			boolean p1Loss = false;
+			boolean p2Loss = false;
+			int pot = deal.getPot();
+			int p1Bal = player1.getBalance();
+			int p2Bal = player2.getBalance();
+			if (dealerCount > 21) {
+				JOptionPane.showMessageDialog(null, "Dealer's total exceeded 21", "Dealer Lost", JOptionPane.INFORMATION_MESSAGE);
+				dealerLoss = true;
+			}
+			if( p1Count > 21 )
+			{
+				JOptionPane.showMessageDialog(null, "Player 1's total exceeded 21", "Player 1 Lost", JOptionPane.INFORMATION_MESSAGE);
+				p1Loss = true;
+			}
+			if (p2Count > 21)
+			{
+				JOptionPane.showMessageDialog(null, "Player 2's total exceeded 21", "Player 2 Lost", JOptionPane.INFORMATION_MESSAGE);
+				p2Loss = true;
+			}
+			if (p1Loss && p2Loss || dealerCount == 21) {
+				dealerWins = true;
+			}
+			//Dealer Wins
+			if (dealerWins) {
+				JOptionPane.showMessageDialog(null, "Oh No!", "Dealer Won the Round", JOptionPane.INFORMATION_MESSAGE);
+				deal.emptyPot();
+				return;
+			}
+			if (dealerLoss)
+			{
+				System.out.println("Dealer loses");
+				//Player 1 Wins
+				if (p1Loss == false && p1Count > p2Count || p2Loss == true) {
+					JOptionPane.showMessageDialog(null, "Player 1's total is: " + p1Count, "Player 1 Wins!", JOptionPane.INFORMATION_MESSAGE);
+					player1.setGamesWon(player1.getGamesWon() + 1);
+					player1.setBalance(p1Bal + pot);
+					deal.emptyPot();
+					return;
+				}
+				//Player 2 Wins
+				else if (p2Loss == false && p2Count > p1Count || p1Loss == true)
+				{
+					JOptionPane.showMessageDialog(null, "Player 2's total is: " + p2Count, "Player 2 Wins!", JOptionPane.INFORMATION_MESSAGE);
+					player2.setGamesWon(player2.getGamesWon() + 1);
+					player2.setBalance(p2Bal + pot);
+					deal.emptyPot();
+					return;
+				}
+				//Tie
+				else if (p1Count == p2Count) {
+					JOptionPane.showMessageDialog(null, "It's A Tie", "Nobody Wins", JOptionPane.INFORMATION_MESSAGE);
+					deal.emptyPot();
+					return;
+				}
+			}
+			else if (dealerLoss == false){
+				System.out.println("Dealer Did'nt lose");
+			//Player 1 Wins
+			if(p1Count > p2Count && p1Count > dealerCount && p1Loss == false) {
+				JOptionPane.showMessageDialog(null, "Player 1's total is: " + p1Count, "Player 1 Wins!", JOptionPane.INFORMATION_MESSAGE);
+				player1.setGamesWon(player1.getGamesWon() + 1);
+				player1.setBalance(p1Bal + pot);
+				deal.emptyPot();
+				return;
+			}
+			//Player 2 Wins
+			else if (p2Count > p1Count && p2Count > dealerCount && p2Loss == false) {
+				JOptionPane.showMessageDialog(null, "Player 2's total is: " + p2Count, "Player 2 Wins!", JOptionPane.INFORMATION_MESSAGE);
+				player2.setGamesWon(player2.getGamesWon() + 1);
+				player2.setGamesWon(player2.getGamesWon() + 1);
+				player2.setBalance(p2Bal + pot);
+				deal.emptyPot();
+				return;
+			}
+		}
+		}
+	}
+			
+		
+			
+
 	
-	private void displayResult(int dealerCount, int playerCount, Player player, int playerNum, Dealer deal)
-	{
-		if( playerCount > 21 )
-		{
-			JOptionPane.showMessageDialog(null, "Player"+playerNum+"'s total exceeded 21", "Player"+playerNum+" Lost", JOptionPane.INFORMATION_MESSAGE);
-			deal.emptyPot();
-			return;
-		}
-		if(dealerCount > 21 )
-		{
-			JOptionPane.showMessageDialog(null, "Dealer's total exceeded 21", "Player"+playerNum+" Won", JOptionPane.INFORMATION_MESSAGE);
-			player.setGamesWon(player.getGamesWon()+1);
-			int pot = deal.getPot();
-			int prevBal = player.getBalance();
-			player.setBalance(prevBal + pot);
-			deal.emptyPot();
-			return;
-		}
 		
-		if( playerCount > dealerCount )
-		{
-			//Player won
-			JOptionPane.showMessageDialog(null, "Player"+playerNum+"'s total is more than Dealer's", "Player"+playerNum+" Won", JOptionPane.INFORMATION_MESSAGE);
-			player.setGamesWon(player.getGamesWon()+1);
-			int pot = deal.getPot();
-			int prevBal = player.getBalance();
-			player.setBalance(prevBal + pot);
-			deal.emptyPot();
-		}
-		else if( playerCount < dealerCount )
-		{
-			//Player lost
-			JOptionPane.showMessageDialog(null, "Player"+playerNum+"'s total is less than Dealer's", "Player"+playerNum+" Lost", JOptionPane.INFORMATION_MESSAGE);
-			deal.emptyPot();
-		}
-		if( playerCount == dealerCount )
-		{
-			//Tie
-			JOptionPane.showMessageDialog(null, "Player"+playerNum+" and Dealer got same total", "It's a Tie", JOptionPane.INFORMATION_MESSAGE);
-			deal.emptyPot();
-		}
-	}
-}
