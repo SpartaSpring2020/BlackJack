@@ -24,7 +24,8 @@ public class GUI extends JFrame {
 	JButton buttonYes = new JButton();
 	JButton buttonNo = new JButton();
 	JButton buttonNew = new JButton();
-
+	JButton buttonBetting = new JButton();
+   
 
 	int gridX = 50;
 	int gridY = 50;
@@ -260,6 +261,18 @@ public class GUI extends JFrame {
 		buttonNew.setBackground(colorButton);
 		buttonNew.setText("NEW GAME");
 		board.add(buttonNew);
+
+		//Betting Button
+				Betting betting= new Betting();
+				buttonBetting.addActionListener(betting);
+				buttonBetting.setBounds(1000, 570, 160, 40);
+				buttonBetting.setFont(fontButton);
+				buttonBetting.setBackground(colorButton);
+				buttonBetting.setText("BEETING");
+				board.add(buttonBetting);	
+		
+
+		
 
 		this.dealer = dealer;
 		dealer.deal();
