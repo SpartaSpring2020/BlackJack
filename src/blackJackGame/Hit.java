@@ -8,7 +8,7 @@ public class Hit extends playGame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        boolean isStartNewGame = false;
+        boolean isPlayerTurnComplete = false;
         GUI gui = playGame.getGUI();
         Dealer dealer = gui.dealer;
         Deck cardsDeck = dealer.getCardsDeck();
@@ -28,17 +28,55 @@ public class Hit extends playGame implements ActionListener {
         gui.updatePlayerCards(playerNum);
         //Validate for total
         int playerTotal = player.getTotalValue();
+        
+        
         if (playerTotal > 21) {
-            //Total with new card is more than 21
-            JOptionPane.showMessageDialog(null, "Total exeeded 21", "Lost the round", JOptionPane.INFORMATION_MESSAGE);
-            isStartNewGame = true;
+        	if( playerNum == 1 )
+        	{
+        		JOptionPane.showMessageDialog(null, "Next Player turn", "Your Turn Complete", JOptionPane.INFORMATION_MESSAGE);
+        	}
+        	else if(playerNum == 2)
+        	{
+        		JOptionPane.showMessageDialog(null, "Let's check the result", "Your Turn Complete", JOptionPane.INFORMATION_MESSAGE);
+        	}
+        	isPlayerTurnComplete = true;
         } else if (playerTotal == 21) {
-            JOptionPane.showMessageDialog(null, "Excellent: It's 21, it's dealers turn", "Dealers Turn", JOptionPane.INFORMATION_MESSAGE);
-            gui.pressStandButton();
-            isStartNewGame = true;
+
+        	if( playerNum == 1 )
+        	{
+        		JOptionPane.showMessageDialog(null, "Excellent: It's 21, it's next Player turn", "Your Turn Complete", JOptionPane.INFORMATION_MESSAGE);
+        	}
+        	else if(playerNum == 2)
+        	{
+        		JOptionPane.showMessageDialog(null, "Excellent: It's 21, Let's check the result", "Your Turn Complete", JOptionPane.INFORMATION_MESSAGE);
+        	}
+        	isPlayerTurnComplete = true;
         }
-        if (isStartNewGame) {
-            playGame.newRound();
+        
+
+        if (isPlayerTurnComplete) {
+        	updatePlayerActivity(players,gui);
         }
+    }
+    
+    private void updatePlayerActivity(ArrayList<Player> players, GUI gui)
+    {
+		for( int cnt = 0; cnt < players.size(); ++cnt )
+		{
+			if(players.get(cnt).isCurrentPlayer())
+			{
+				if( cnt != ( players.size() - 1 ) )
+				{
+					players.get(cnt).setToPlayerActivity(false);
+					players.get(cnt+1).setToPlayerActivity(true);
+				}
+				else
+				{
+					players.get(cnt).setToPlayerActivity(false);
+					gui.pressStandButton();
+				}
+				break;
+			}
+		}
     }
 }
