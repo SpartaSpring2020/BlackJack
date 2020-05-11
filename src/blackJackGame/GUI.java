@@ -26,6 +26,7 @@ public class GUI extends JFrame {
 	JButton buttonNew = new JButton();
 	JButton buttonBetting = new JButton();
    
+
 	int gridX = 50;
 	int gridY = 50;
 	int gridW = 900; //Grid Width
@@ -40,13 +41,15 @@ public class GUI extends JFrame {
 	int cardAW = cardTW - 2 * cardSpacing;
 	int cardAH = cardTH - 2 * cardSpacing;
 
+	JLabel cardBackSideLabel = null;
+
 
 	public Dealer dealer;
 	//public ArrayList <Player> players = new ArrayList <Player>();
 	//public Player player;
 
 
-	public void updateDealerCards() {
+	public void refreshDealerCards() {
 		loadDealerCards(dealer.getHand().getCards());
 	}
 
@@ -56,20 +59,55 @@ public class GUI extends JFrame {
 	ArrayList < Card > dealerCards = new ArrayList < Card > ();
 
 	public void loadDealerCards(ArrayList < Card > cards) {
-		int j = 0;
-		for (Card c: cards) {
-			System.out.println("Dealer has card" + " " + c.getName() + c.getNum() + " " + "of" + " " + c.getShape());
-			char shape = c.getShape().charAt(0);
-			char lShape = Character.toLowerCase(shape);
-			String path = "imgs/" + c.getNum() + lShape + ".gif";
-			System.out.println(path);
-			ImageIcon image = new ImageIcon(path);
-			JLabel imageLabel = new JLabel(image);
-			add(imageLabel);
-			imageLabel.setBounds(gridX + j * cardTW + cardSpacing, gridY + cardSpacing + 25, cardAW, cardAH);
-			j++;
-			imageLabel.setVisible(true);
 
+		StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
+		StackTraceElement e = stacktrace[2];//maybe this number needs to be corrected
+		String methodName = e.getMethodName();
+		if(methodName.equals("<init>"))
+		{
+			int j = 0;
+			for (Card c: cards) {
+				System.out.println("Dealer has card" + " " + c.getName() + c.getNum() + " " + "of" + " " + c.getShape());
+				char shape = c.getShape().charAt(0);
+				char lShape = Character.toLowerCase(shape);
+				String path = "imgs/" + c.getNum() + lShape + ".gif";
+				if( j == 1 )
+				{
+					path = "imgs/cardBackSide.gif";
+				}
+				System.out.println(path);
+				ImageIcon image = new ImageIcon(path);
+				JLabel imageLabel = new JLabel(image);
+				if( j == 1 )
+				{
+					cardBackSideLabel = imageLabel;
+				}
+				add(imageLabel);
+				imageLabel.setBounds(gridX + j * cardTW + cardSpacing, gridY + cardSpacing + 25, cardAW, cardAH);
+				j++;
+				imageLabel.setVisible(true);
+			}
+		}
+		else
+		{
+			int j = 0;
+			for (Card c: cards) {
+				System.out.println("Dealer has card" + " " + c.getName() + c.getNum() + " " + "of" + " " + c.getShape());
+				char shape = c.getShape().charAt(0);
+				char lShape = Character.toLowerCase(shape);
+				String path = "imgs/" + c.getNum() + lShape + ".gif";
+				System.out.println(path);
+				ImageIcon image = new ImageIcon(path);
+				JLabel imageLabel = new JLabel(image);
+				if( j == 1 )
+				{
+					remove(cardBackSideLabel);
+				}
+				add(imageLabel);
+				imageLabel.setBounds(gridX + j * cardTW + cardSpacing, gridY + cardSpacing + 25, cardAW, cardAH);
+				j++;
+				imageLabel.setVisible(true);
+			}
 		}
 	}
 
@@ -108,10 +146,45 @@ public class GUI extends JFrame {
 		dealer.getHand().addCard(newCard);
 	}
 
-	public boolean checkForGameCompletion() {
+	/*public boolean checkForGameCompletion() {
 		boolean isGameCompleted = false;
 
-		for( int cnt = 0; cnt < dealer.players.size(); ++cnt )
+
+		int p1Count = dealer.players.get(0).getTotalValue();
+		int p2Count = dealer.players.get(1).getTotalValue();
+		int dealerCount = dealer.getDealerValue();
+		if( dealerCount == 21 )
+		{
+			if( p1Count == 21 )
+			{
+				JOptionPane.showMessageDialog(null, "It's a tie, will start a new game", "Dealer and Player1 Tie", JOptionPane.INFORMATION_MESSAGE);
+			}
+			if(p2Count == 21)
+			{
+				JOptionPane.showMessageDialog(null, "It's a tie, will start a new game", "Dealer and Player2 Tie", JOptionPane.INFORMATION_MESSAGE);
+			}
+			if( p1Count < 21 && p2Count < 21 )
+			{
+				JOptionPane.showMessageDialog(null, "Tough Luck: Dealer got a 21", "Lost the game", JOptionPane.INFORMATION_MESSAGE);
+			}
+			isGameCompleted = true;
+		}
+		else
+		{
+			if( p1Count == 21 )
+			{
+				JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Player1 Won the game", JOptionPane.INFORMATION_MESSAGE);
+				dealer.players.get(0).setGamesWon(dealer.players.get(0).getGamesWon()+1);
+				isGameCompleted = true;
+			}
+			if(p2Count == 21)
+			{
+				JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Player2 Won the game", JOptionPane.INFORMATION_MESSAGE);
+				dealer.players.get(1).setGamesWon(dealer.players.get(1).getGamesWon()+1);
+				isGameCompleted = true;
+			}
+		}
+		//for( int cnt = 0; cnt < dealer.players.size(); ++cnt )
 		{
 			Player player = dealer.players.get(cnt);
 
@@ -130,7 +203,7 @@ public class GUI extends JFrame {
 			}
 		}
 		return isGameCompleted;
-	}
+	}*/
 
 	public void pressStandButton() {
 		buttonStand.doClick();
@@ -144,7 +217,6 @@ public class GUI extends JFrame {
 			return;
 		}
 
-
 		this.setSize(width, height);
 		this.setTitle("BlackJack");
 		this.setVisible(true);
@@ -153,7 +225,6 @@ public class GUI extends JFrame {
 		Board board = new Board();
 		this.setContentPane(board);
 		this.setLayout(null);
-		
 
 		//Hit button
 		Hit hit = new Hit();
@@ -163,7 +234,6 @@ public class GUI extends JFrame {
 		buttonHit.setBackground(colorButton);
 		buttonHit.setText("HIT");
 		board.add(buttonHit);
-
 
 		//Stand button
 		Stand stand = new Stand();
@@ -203,15 +273,13 @@ public class GUI extends JFrame {
 		
 
 		
-		
+
 		this.dealer = dealer;
 		dealer.deal();
 		ArrayList < Card > dealerCards = new ArrayList < Card > ();
 		dealerCards = dealer.getHand().getCards();
 		loadDealerCards(dealerCards);
 
-		
-		
 		for( int cnt = 0; cnt < dealer.getPlayers().size(); ++cnt )
 		{
 			Player player = dealer.getPlayers().get(cnt);
@@ -228,7 +296,7 @@ public class GUI extends JFrame {
 		//String handValStr = String.valueOf(dealer.getPlayers().get(0).getTotalValue());
 		//JOptionPane.showMessageDialog(null, handValStr, "Your hand's value is: ", JOptionPane.INFORMATION_MESSAGE);
 
-		if (dealer.getHand().getHandValue() == 21) {
+		/*if (dealer.getHand().getHandValue() == 21) {
 			JOptionPane.showMessageDialog(null, "Dealer Got 21", "You Lose!", JOptionPane.INFORMATION_MESSAGE);
 			playGame.newRound();
 		}
@@ -238,11 +306,10 @@ public class GUI extends JFrame {
 			if (dealer.getPlayers().get(0).getHand().getHandValue() == 21) {
 				JOptionPane.showMessageDialog(null, "Excellent: It's 21", "Player"+(cnt+1)+" Win!", JOptionPane.INFORMATION_MESSAGE);
 				player.hasWon();
-				
 				playGame.newRound();
 			}
-		}
-		
+		}*/
+
 	}
 
 	public class Board extends JPanel {
@@ -266,32 +333,44 @@ public class GUI extends JFrame {
 			eg.setColor(white);
 			eg.setFont(labelFont);
 			eg.drawString("DEALER", 100, 100);
-			eg.drawString("GAMES WON: ", 100, 700);
+			eg.drawString("Player1 Total Wins: ", 100, 700);
+			eg.drawString(String.valueOf(dealer.getPlayers().get(0).getGamesWon()), 300, 700);
+			eg.drawString("Player2 Total Wins: ", 100, 750);
+			eg.drawString(String.valueOf(dealer.getPlayers().get(1).getGamesWon()), 300, 750);
 			//eg.drawString(String.valueOf(dealer.getPlayers().get(0).getScore()), 246, 700); //Games Won
-			for( int cnt = 0; cnt < dealer.getPlayers().size(); ++cnt )
+			for( int cnt = 1; cnt <= dealer.getPlayers().size(); ++cnt )
 			{
-				if( dealer.getPlayers().get(cnt).isCurrentPlayer() )
+				if( dealer.getPlayers().get(cnt-1).isCurrentPlayer() )
 				{
 					Color currentColor = eg.getColor();
 					eg.setColor(Color.ORANGE);
-					eg.drawString("PLAYER "+(cnt+1)+" Turn", 100, 275+(cnt*175));
-					eg.drawString("PLAYER"+(cnt+1)+" HAND: ", 500, 700+(cnt*50));
+					eg.drawString("PLAYER"+(cnt)+" Turn", 100, 275+((cnt-1)*175));
+					eg.drawString("PLAYER"+(cnt)+" HAND: ", 500, 700+(cnt*50));
 					eg.setColor(currentColor);
 				}
 				else
 				{
-					eg.drawString("PLAYER "+(cnt+1), 100, 275+(cnt*175));
-					eg.drawString("PLAYER"+(cnt+1)+" HAND: ", 500, 700+(cnt*50));
+					eg.drawString("PLAYER"+(cnt), 100, 275+((cnt-1)*175));
+					eg.drawString("PLAYER"+(cnt)+" HAND: ", 500, 700+(cnt*50));
 				}
-				eg.drawString(String.valueOf(dealer.getPlayers().get(cnt).getTotalValue()), 676, 700+(cnt*50)); //Player Hand Value
+				eg.drawString(String.valueOf(dealer.getPlayers().get(cnt-1).getTotalValue()), 676, 700+(cnt*50)); //Player Hand Value
 			}
-			eg.drawString("DEALER HAND: ", 500, 700+(dealer.getPlayers().size()*50));
-			eg.drawString(String.valueOf(dealer.getDealerValue()), 676, 700+(dealer.getPlayers().size()*50)); //Dealer Hand Value
-
-
+			eg.drawString("DEALER HAND: ", 500, 700);
+			StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
+			boolean isCalledAfterCheckForWin = false;
+			for( StackTraceElement stackEle : stacktrace )
+			{
+				if(stackEle.getMethodName().equals("checkForWin"))
+					isCalledAfterCheckForWin = true;
+			}
+			if( isCalledAfterCheckForWin )
+			{
+				eg.drawString(String.valueOf(dealer.getDealerValue()), 676, 700); //Dealer Hand Value
+			}
+			else
+			{
+				eg.drawString(String.valueOf(dealer.getHand().getCards().get(0).getCardValue()), 676, 700); //Dealer Hand Value
+			}
 		}
-
 	}
-
-
 }
