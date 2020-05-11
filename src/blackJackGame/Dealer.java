@@ -71,6 +71,7 @@ public class Dealer {
 	}
 
 
+
 	public ArrayList < Player > getPlayers() {
 		return players;
 	}
